@@ -1,10 +1,44 @@
 services:
   db:
     container_name: TelegramBotDB
-    image: postgres:17.6
+    image: postgres:18
     environment:
-      POSTGRES_DB: botdb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  bot:
+    container_name: TelegramBot
+    build:
+      context: .
+      no_cache: true
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_FIRST_ADMIN_ID: ${TELEGRAM_FIRST_ADMIN_ID}
+      TELEGRAM_SECOND_ADMIN_ID: ${TELEGRAM_SECOND_ADMIN_ID}
+      VPN_SUB_NAME: ${VPN_SUB_NAME}
+      VPN_PRICE_VALUE: ${VPN_PRICE_VALUE}
+      VPN_PAYMENT_DAY: ${VPN_PAYMENT_DAY}
+      APPLE_SUB_NAME: ${APPLE_SUB_NAME}
+      APPLE_PRICE_VALUE: ${APPLE_PRICE_VALUE}
+      APPLE_PAYMENT_DAY: ${APPLE_PAYMENT_DAY}
+    ports:
+      - "${APP_PORT}:8080"
+    restart: unless-stopped
+
+volumes:
+  db_data:

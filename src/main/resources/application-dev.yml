@@ -31,3 +31,10 @@ telegram:
     token: PLACEHOLDER
     firstAdminId: PLACEHOLDER
     secondAdminId: PLACEHOLDER
+  subscription:
+    vpnSubName: PLACEHOLDER
+    vpnPriceValue: PLACEHOLDER
+    vpnPaymentDay: PLACEHOLDER
+    appleSubName: PLACEHOLDER
+    applePriceValue: PLACEHOLDER
+    applePaymentDay: PLACEHOLDER

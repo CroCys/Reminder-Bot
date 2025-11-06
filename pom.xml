@@ -10,9 +10,9 @@
     </parent>
     <groupId>com.vadim</groupId>
     <artifactId>TelegramBot</artifactId>
-    <version>1.0</version>
-    <name>TelegramBot</name>
-    <description>TelegramBot</description>
+    <version>1.4</version>
+    <name>Telegram bot</name>
+    <description>Reminder Telegram bot</description>
     <url/>
     <licenses>
         <license/>

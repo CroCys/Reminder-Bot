@@ -19,7 +19,7 @@ public class ReminderScheduler {
     private final ReminderBot bot;
 
     @Transactional
-    @Scheduled(cron = "0 0 8 * * *", zone = "Europe/Moscow")
+    @Scheduled(cron = "0 0 9 * * *")
     public void sendReminders() {
         LocalDate today = LocalDate.now();
 
