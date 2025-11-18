@@ -6,8 +6,8 @@ import com.vadim.telegrambot.model.User;
 import com.vadim.telegrambot.repository.PaymentRepository;
 import com.vadim.telegrambot.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;

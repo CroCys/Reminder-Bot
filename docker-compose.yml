@@ -1,6 +1,6 @@
 services:
   db:
-    container_name: TelegramBotDB
+    container_name: telegrambot-db
     image: postgres:18
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -9,36 +9,30 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
     restart: unless-stopped
 
   bot:
-    container_name: TelegramBot
-    build:
-      context: .
-      no_cache: true
-    depends_on:
-      - db
+    image: eclipse-temurin:21-jre-jammy
+    container_name: telegrambot
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./target/TelegramBot-1.5.jar:/app/bot.jar
+      - ./subscriptions.json:/app/subscriptions.json
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME}
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      TELEGRAM_FIRST_ADMIN_ID: ${TELEGRAM_FIRST_ADMIN_ID}
-      TELEGRAM_SECOND_ADMIN_ID: ${TELEGRAM_SECOND_ADMIN_ID}
-      VPN_SUB_NAME: ${VPN_SUB_NAME}
-      VPN_PRICE_VALUE: ${VPN_PRICE_VALUE}
-      VPN_PAYMENT_DAY: ${VPN_PAYMENT_DAY}
-      APPLE_SUB_NAME: ${APPLE_SUB_NAME}
-      APPLE_PRICE_VALUE: ${APPLE_PRICE_VALUE}
-      APPLE_PAYMENT_DAY: ${APPLE_PAYMENT_DAY}
-    ports:
-      - "${APP_PORT}:8080"
+    depends_on:
+      - db
+    command:
+      [
+        "java",
+        "-jar",
+        "bot.jar",
+        "--subscription.jsonFilePath=/app/subscriptions.json"
+      ]
     restart: unless-stopped
 
 volumes:
-  db_data:
+  pgdata:

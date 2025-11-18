@@ -1,11 +1,10 @@
 package com.vadim.telegrambot.repository;
 
-import java.util.Optional;
-
+import com.vadim.telegrambot.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.vadim.telegrambot.model.User;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

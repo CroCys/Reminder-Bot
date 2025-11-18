@@ -1,0 +1,14 @@
+[
+  {
+    "uniqueCode": "1",
+    "name": "VPN",
+    "price": 100,
+    "dayOfMonth": 22
+  },
+  {
+    "uniqueCode": "2",
+    "name": "Apple",
+    "price": 172,
+    "dayOfMonth": 7
+  }
+]

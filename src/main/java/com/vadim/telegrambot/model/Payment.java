@@ -1,24 +1,9 @@
 package com.vadim.telegrambot.model;
 
-import java.time.Month;
-import java.util.Objects;
+import jakarta.persistence.*;
+import lombok.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.Month;
 
 @Entity
 @Table(name = "Payments")
@@ -53,13 +38,22 @@ public class Payment {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Payment payment)) return false;
-        return year == payment.year && month == payment.month && Objects.equals(user, payment.user) && Objects.equals(subscription, payment.subscription);
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Payment other)) {
+            return false;
+        }
+
+        if (id != null && other.id != null) {
+            return id.equals(other.id);
+        }
+
+        return false;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, subscription, month, year);
+        return id != null ? id.hashCode() : 0;
     }
 }

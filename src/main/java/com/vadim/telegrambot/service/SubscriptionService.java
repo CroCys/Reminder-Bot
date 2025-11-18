@@ -1,16 +1,14 @@
 package com.vadim.telegrambot.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.vadim.telegrambot.model.Subscription;
 import com.vadim.telegrambot.model.User;
 import com.vadim.telegrambot.repository.SubscriptionRepository;
 import com.vadim.telegrambot.repository.UserRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,23 +25,33 @@ public class SubscriptionService {
 
     @Transactional
     public boolean subscribe(User user, Long subscriptionId) {
-        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new IllegalArgumentException("Подписка не найдена: " + subscriptionId));
+        Subscription subscription = subscriptionRepository
+                .findById(subscriptionId)
+                .orElseThrow(() -> new IllegalArgumentException("Подписка не найдена: " + subscriptionId));
+
         boolean added = user.getSubscriptions().add(subscription);
+
         if (added) {
             userRepository.save(user);
             paymentService.createPayment(user, subscription);
         }
+
         return added;
     }
 
     @Transactional
     public boolean unsubscribe(User user, Long subscriptionId) {
-        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new IllegalArgumentException("Подписка не найдена: " + subscriptionId));
+        Subscription subscription = subscriptionRepository
+                .findById(subscriptionId)
+                .orElseThrow(() -> new IllegalArgumentException("Подписка не найдена: " + subscriptionId));
+
         boolean removed = user.getSubscriptions().remove(subscription);
+
         if (removed) {
             userRepository.save(user);
             paymentService.deletePayment(user, subscription);
         }
+
         return removed;
     }
 }

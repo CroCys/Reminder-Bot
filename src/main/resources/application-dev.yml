@@ -1,8 +1,12 @@
+server:
+  port: 8080
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/botdb
     username: postgres
     password: postgres
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,25 +20,13 @@ spring:
       enabled: true
       pool:
         size: 3
-      thread-name-prefix: "scheduler-"
-    execution:
-      enabled: true
-      pool:
-        core-size: 2
-        max-size: 4
-        queue-capacity: 100
-      thread-name-prefix: "async-"
+      thread-name-prefix: "Scheduler - "
 
-telegram:
-  bot:
-    username: PLACEHOLDER
-    token: PLACEHOLDER
-    firstAdminId: PLACEHOLDER
-    secondAdminId: PLACEHOLDER
-  subscription:
-    vpnSubName: PLACEHOLDER
-    vpnPriceValue: PLACEHOLDER
-    vpnPaymentDay: PLACEHOLDER
-    appleSubName: PLACEHOLDER
-    applePriceValue: PLACEHOLDER
-    applePaymentDay: PLACEHOLDER
+bot:
+  username: PLACEHOLDER
+  token: PLACEHOLDER
+  firstAdminId: PLACEHOLDER
+  secondAdminId: PLACEHOLDER
+
+subscription:
+  jsonFilePath: ./subscriptions.json

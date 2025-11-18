@@ -1,9 +1,10 @@
 package com.vadim.telegrambot.service;
 
-import java.util.List;
-import java.util.Set;
-
 import com.vadim.telegrambot.model.Payment;
+import com.vadim.telegrambot.model.Subscription;
+import com.vadim.telegrambot.model.User;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -18,23 +19,22 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import com.vadim.telegrambot.model.Subscription;
-import com.vadim.telegrambot.model.User;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ReminderBot extends TelegramLongPollingBot {
+public class Bot extends TelegramLongPollingBot {
 
-    @Value("${telegram.bot.username}")
+    @Value("${bot.username}")
     private String botUsername;
-    @Value("${telegram.bot.token}")
+    @Value("${bot.token}")
     private String botToken;
-    @Value("${telegram.bot.firstAdminId}")
+    @Value("${bot.firstAdminId}")
     private int firstAdminId;
-    @Value("${telegram.bot.secondAdminId}")
+    @Value("${bot.secondAdminId}")
     private int secondAdminId;
 
     private final UserService userService;
